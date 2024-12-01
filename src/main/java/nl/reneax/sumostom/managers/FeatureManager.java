@@ -4,7 +4,7 @@ import net.minestom.server.event.GlobalEventHandler;
 import nl.reneax.sumostom.Server;
 import nl.reneax.sumostom.features.InstanceFeature;
 import nl.reneax.sumostom.features.both.LeaveFeature;
-import nl.reneax.sumostom.features.game.PlayerMoveFeature;
+import nl.reneax.sumostom.features.game.DeathFeature;
 import nl.reneax.sumostom.features.global.*;
 import nl.reneax.sumostom.features.global.DamageFeature;
 import nl.reneax.sumostom.features.pre.FreezeFeature;
@@ -50,8 +50,7 @@ public class FeatureManager {
      */
     public void registerGameFeatures(GameRoom gameRoom) {
         List.of(
-                new PlayerMoveFeature(gameRoom),
-                new LeaveFeature(gameRoom),
+                new DeathFeature(gameRoom),
                 // pre & game features
                 new LeaveFeature(gameRoom)
         ).forEach(feature -> {
