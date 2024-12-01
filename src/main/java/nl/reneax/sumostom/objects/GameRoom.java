@@ -8,6 +8,7 @@ import net.minestom.server.event.trait.InstanceEvent;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.LightingChunk;
 import net.minestom.server.instance.block.Block;
+import net.minestom.server.network.packet.server.ServerPacket;
 import net.minestom.server.network.packet.server.play.ParticlePacket;
 import net.minestom.server.particle.Particle;
 import net.minestom.server.sound.SoundEvent;
@@ -51,6 +52,14 @@ public class GameRoom {
      */
     public void broadcast(String message) {
         this.getPlayers().forEach(player -> player.entity().sendMessage(message));
+    }
+
+    /**
+     * Sends a packet to every player in the game room.
+     * @param packet The packet to send
+     */
+    public void sendPacket(ServerPacket packet) {
+        this.getPlayers().forEach(loopPlayer -> loopPlayer.entity().sendPacket(packet));
     }
 
     /**
@@ -166,7 +175,7 @@ public class GameRoom {
                 );
                 this.playSound(Sound.sound(SoundEvent.ENTITY_FIREWORK_ROCKET_BLAST,
                         Sound.Source.MASTER, 1.0f, 1.0f));
-                this.getPlayers().forEach(loopPlayer -> loopPlayer.entity().sendPacket(particlePacket));
+                this.sendPacket(particlePacket);
             }
 
             return currentCount > 0 ? TaskSchedule.seconds(1) : TaskSchedule.stop();
